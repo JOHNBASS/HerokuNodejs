@@ -11,6 +11,10 @@ app.set('view engine', 'ejs');
 
 // Third-party libe
 var firebase = require("firebase");
+const bodyParser = require('body-parser');
+
+//bodyParser
+app.use(bodyParser.json());
 
 //firebase
 var config = {
@@ -33,6 +37,33 @@ app.get('/favicon.ico', (request, response) => {
   response.status(204);
 });
 
+app.post('/add', function(request, response) {
+  console.log("request: "+ JSON.stringify(request.body));
+
+  var db = firebase.database();
+  var ref = db.ref("/users/").push();
+
+  var value = request.body;
+  ref.set(value);
+
+  var postId = ref.key;
+
+  response.send(JSON.stringify(postId));
+});
+
+
+
+app.post('/set', function(request, response) {
+  console.log("request: "+ JSON.stringify(request.body));
+
+  var db = firebase.database();
+  var ref = db.ref("/users/");
+
+  var value = request.body;
+  ref.set(value);
+
+  response.send(JSON.stringify(value));
+});
 
 app.get('/set', function(request, response) {
 
@@ -47,13 +78,27 @@ app.get('/set', function(request, response) {
   response.send(value);
 });
 
-
-app.get('/get', function(request, response) {
+app.get('/update', function(request, response) {
+  var key = request.query.key;
+  var status = request.query.status;
 
   var db = firebase.database();
-  var ref = db.ref("/");
+  var ref = db.ref("/users/"+key);
+
+  ref.update(
+    {"status":status}
+  );
+
+  response.send(status);
+});
+
+app.get('/get', function(request, response) {
+  var key = request.query.key;
+  var db = firebase.database();
+  var ref = db.ref("/users/"+key);
+
   ref.once("value", function(snapshot) {
-      console.log(snapshot.val());
+      console.log(snapshot.val()+ " " + snapshot.val().status);
       response.send(snapshot.val());
   });
 

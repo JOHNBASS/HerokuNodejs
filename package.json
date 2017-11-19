@@ -14,7 +14,8 @@
     "ejs": "^2.5.6",
     "express": "^4.15.2",
     "firebase": "^4.6.2",
-    "nodemon": "^1.12.1"
+    "nodemon": "^1.12.1",
+    "body-parser": "^1.17.2"
   },
   "devDependencies": {
     "request": "^2.81.0",
