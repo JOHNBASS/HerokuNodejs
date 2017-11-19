@@ -75,6 +75,7 @@ app.post('/set', function(request, response) {
   response.send(JSON.stringify(value));
 });
 
+
 app.get('/set', function(request, response) {
 
   var db = firebase.database();
