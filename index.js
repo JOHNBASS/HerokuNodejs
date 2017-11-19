@@ -51,7 +51,7 @@ app.post('/add', function(request, response) {
   console.log("request: "+ JSON.stringify(request.body));
 
   var db = firebase.database();
-  var ref = db.ref("/users/").push();
+  var ref = db.ref("/users").push();
 
   var value = request.body;
   ref.set(value);
@@ -61,6 +61,25 @@ app.post('/add', function(request, response) {
   response.send({"messages":[{"text":"請記住自己的ID:"+postId}]});
 });
 
+app.get('/add', function(request, response) {
+  var fbname = request.query.fbname;
+  var fbid = request.query.fbid;
+
+  var db = firebase.database();
+  var ref = db.ref("/users").push();
+
+  var value = {
+    "fbname":fbname,
+    "fbid":fbid,
+    "status":0
+  };
+  
+  ref.set(value);
+
+  var postId = ref.key;
+
+  response.send({"messages":[{"text":"請記住自己的ID:"+postId}]});
+});
 
 
 app.post('/set', function(request, response) {
