@@ -17,6 +17,17 @@ $ npm dev
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).
 
+## Check Alive
+
+http://localhost:5000/alive is server heartbeat
+
+If work - service alive
+
+```
+http://localhost:5000/alive
+
+```
+
 ## Deploying to Heroku
 
 ```
