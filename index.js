@@ -12,6 +12,11 @@ app.set('view engine', 'ejs');
 // Third-party libe
 var firebase = require("firebase");
 const bodyParser = require('body-parser');
+var FBMessenger = require('fb-messenger')
+
+//FBMessenger
+var FBPageToken = "";
+var messenger = new FBMessenger(FBPageToken);
 
 //bodyParser
 app.use(bodyParser.json());
@@ -91,6 +96,25 @@ app.get('/update', function(request, response) {
 
   response.send(status);
 });
+
+app.get('/kill', function(request, response) {
+  var key = request.query.key;
+  var status = request.query.status;
+
+  var db = firebase.database();
+  var ref = db.ref("/users/"+key);
+
+  ref.update(
+    {"status":status}
+  );
+
+  ref.once("value", function(snapshot) {
+    messenger.sendTextMessage(snapshot.val().fbid, 'kill you');
+  });
+
+  response.send(status);
+});
+
 
 app.get('/get', function(request, response) {
   var key = request.query.key;

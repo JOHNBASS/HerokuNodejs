@@ -55,6 +55,17 @@ Check Database rule base
 }
 ```
 
+## fb-messenger 
+
+Add 粉絲團 Token
+
+```
+var messenger = new FBMessenger(<FBpage TOKEN>);
+```
+<ID> is fb User ID
+```
+messenger.sendTextMessage(<ID>, 'kill you');
+```
 
 ## Deploying to Heroku
 
