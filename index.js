@@ -140,7 +140,7 @@ app.get('/kill', function(request, response) {
   ref.once("value", function(snapshot) {
     //messenger.sendTextMessage(snapshot.val().fbid, 'kill you');
     var fbid = snapshot.val().fbid;
-    http.post('https://api.chatfuel.com/bots/5a1116f4e4b000de468e17cf/users/' + fbId + '/send?chatfuel_token=qwYLsCSz8hk4ytd6CPKP4C0oalstMnGdpDjF8YFHPHCieKNc0AfrnjVs91fGuH74&chatfuel_block_name=status1', { name: 'Sam', email: 'sam@emberlabs.org' }, function(res){
+    http.post('https://api.chatfuel.com/bots/5a1116f4e4b000de468e17cf/users/' + fbid + '/send?chatfuel_token=qwYLsCSz8hk4ytd6CPKP4C0oalstMnGdpDjF8YFHPHCieKNc0AfrnjVs91fGuH74&chatfuel_block_name=status1', {}, function(res){
       response.contentType('application/json');
       res.on('data', function(chunk) {
         console.log(chunk);
