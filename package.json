@@ -16,11 +16,10 @@
     "express": "^4.15.2",
     "fb-messenger": "^1.2.0",
     "firebase": "^4.6.2",
-    "http-post": "^0.1.1",
     "nodemon": "^1.12.1"
   },
   "devDependencies": {
-    "request": "^2.81.0",
+    "request": "^2.83.0",
     "tape": "^4.7.0"
   },
   "repository": {

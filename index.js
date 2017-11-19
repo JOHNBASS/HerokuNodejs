@@ -13,10 +13,8 @@ app.set('view engine', 'ejs');
 var firebase = require("firebase");
 const bodyParser = require('body-parser');
 var FBMessenger = require('fb-messenger')
-var http = require('http');
+var _request = require('request');
 
-//http post
-http.post = require('http-post');
 
 //FBMessenger
 var FBPageToken = "";
@@ -140,18 +138,14 @@ app.get('/kill', function(request, response) {
   ref.once("value", function(snapshot) {
     //messenger.sendTextMessage(snapshot.val().fbid, 'kill you');
     var fbid = snapshot.val().fbid;
+    var fbPostURL = "https://api.chatfuel.com/bots/5a1116f4e4b000de468e17cf/users/" + fbid + "/send?chatfuel_token=qwYLsCSz8hk4ytd6CPKP4C0oalstMnGdpDjF8YFHPHCieKNc0AfrnjVs91fGuH74&chatfuel_block_name=status1";
     
-    http.post('https://api.chatfuel.com/bots/5a1116f4e4b000de468e17cf/users/' + fbid + '/send?chatfuel_token=qwYLsCSz8hk4ytd6CPKP4C0oalstMnGdpDjF8YFHPHCieKNc0AfrnjVs91fGuH74&chatfuel_block_name=status1', {"status":1}, function(res){
-      response.contentType('application/json');
-      res.on('data', function(chunk) {
-        console.log(chunk);
-      });
+    _request.post({url:fbPostURL,headers: {"Content-Type": "application/json"}, body: {"status":1}, json:true}, function(err,httpResponse,body){ 
+      console.log(body);  
+      response.send({"messages":[{"text":"你已經殺死:"+key}]}); 
     });
-
-
+    
   });
-
-  response.send({"messages":[{"text":"你已經殺死:"+key}]});
 
 });
 
