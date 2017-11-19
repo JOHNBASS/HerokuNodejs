@@ -13,6 +13,10 @@ app.set('view engine', 'ejs');
 var firebase = require("firebase");
 const bodyParser = require('body-parser');
 var FBMessenger = require('fb-messenger')
+var http = require('http');
+
+//http post
+http.post = require('http-post');
 
 //FBMessenger
 var FBPageToken = "";
@@ -73,7 +77,7 @@ app.get('/add', function(request, response) {
     "fbid":fbid,
     "status":0
   };
-  
+
   ref.set(value);
 
   var postId = ref.key;
@@ -134,10 +138,20 @@ app.get('/kill', function(request, response) {
   );
 
   ref.once("value", function(snapshot) {
-    messenger.sendTextMessage(snapshot.val().fbid, 'kill you');
+    //messenger.sendTextMessage(snapshot.val().fbid, 'kill you');
+    var fbid = snapshot.val().fbid;
+    http.post('https://api.chatfuel.com/bots/5a1116f4e4b000de468e17cf/users/' + fbId + '/send?chatfuel_token=qwYLsCSz8hk4ytd6CPKP4C0oalstMnGdpDjF8YFHPHCieKNc0AfrnjVs91fGuH74&chatfuel_block_name=status1', { name: 'Sam', email: 'sam@emberlabs.org' }, function(res){
+      response.contentType('application/json');
+      res.on('data', function(chunk) {
+        console.log(chunk);
+      });
+    });
+
+
   });
 
-  response.send(status);
+  response.send({"messages":[{"text":"你已經殺死:"+key}]});
+
 });
 
 
