@@ -58,7 +58,7 @@ app.post('/add', function(request, response) {
 
   var postId = ref.key;
 
-  response.send(JSON.stringify(postId));
+  response.send({"messages":[{"text":"請記住自己的ID:"+postId}]});
 });
 
 

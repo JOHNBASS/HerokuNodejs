@@ -73,6 +73,9 @@ messenger.sendTextMessage(<ID>, 'kill you');
 $ heroku create
 $ git push heroku master
 $ heroku open
+
+$ git push heroku HEAD:master
+
 ```
 
 ## Documentation
