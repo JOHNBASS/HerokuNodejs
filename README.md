@@ -32,6 +32,7 @@ http://localhost:5000/alive
 
 Add config form firebase console.
 
+```
   // Initialize Firebase
   var config = {
     apiKey: "",
@@ -41,6 +42,7 @@ Add config form firebase console.
     storageBucket: "",
     messagingSenderId: ""
   };
+```
 
 Check Database rule base
 
