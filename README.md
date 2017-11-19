@@ -12,7 +12,7 @@ Make sure you have [Node.js](http://nodejs.org/) and the [Heroku CLI](https://cl
 $ git clone https://github.com/JOHNBASS/HerokuNodejs.git 
 $ cd HerokuNodejs
 $ npm install
-$ npm dev
+$ npm run dev
 ```
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).
@@ -27,6 +27,32 @@ If work - service alive
 http://localhost:5000/alive
 
 ```
+
+## Firebase init
+
+Add config form firebase console.
+
+  // Initialize Firebase
+  var config = {
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: ""
+  };
+
+Check Database rule base
+
+```
+{
+  "rules": {
+    ".read": "true",
+    ".write": "true"
+  }
+}
+```
+
 
 ## Deploying to Heroku
 

@@ -9,20 +9,55 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
+// Third-party libe
+var firebase = require("firebase");
+
+//firebase
+var config = {
+
+}
+
+firebase.initializeApp(config);
+
 app.get('/', function(request, response) {
   response.render('pages/index');
 });
 
 //check webhook isalive
-app.get('/alive', function(req, res) {
+app.get('/alive', function(request, response) {
   console.log("get content:"+ JSON.stringify(req.body));
-  res.send('service alive');
+  response.send('service alive');
 });
 
-app.get('/favicon.ico', (req, res) => {
-  res.status(204);
+app.get('/favicon.ico', (request, response) => {
+  response.status(204);
 });
 
+
+app.get('/set', function(request, response) {
+
+  var db = firebase.database();
+  var ref = db.ref("/");
+  var value = {
+  Test1: "t1",
+  Test2: "t2"
+  }
+  ref.set(value);
+
+  response.send(value);
+});
+
+
+app.get('/get', function(request, response) {
+
+  var db = firebase.database();
+  var ref = db.ref("/");
+  ref.once("value", function(snapshot) {
+      console.log(snapshot.val());
+      response.send(snapshot.val());
+  });
+
+});
 
 
 app.listen(app.get('port'), function() {
