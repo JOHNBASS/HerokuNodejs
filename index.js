@@ -13,6 +13,10 @@ app.set('view engine', 'ejs');
 var firebase = require("firebase");
 const bodyParser = require('body-parser');
 
+//socket.io
+var server = require('http').createServer(app);
+var io = require('socket.io').listen(server);
+
 //bodyParser
 app.use(bodyParser.json());
 
@@ -104,7 +108,18 @@ app.get('/get', function(request, response) {
 
 });
 
+//SocketIO Applications
+io.on('connection', function(socket){
+  console.log('a user connected');
 
-app.listen(app.get('port'), function() {
+    socket.on('disconnect', function(){
+      console.log('user disconnected');
+    });
+
+});
+
+
+
+server.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });

@@ -54,7 +54,17 @@ Check Database rule base
   }
 }
 ```
+## Socket.IO
 
+Check nodejs log :
+
+```
+[nodemon] starting `node index.js`
+Node app is running on port 5000
+a user connected
+a user connected
+user disconnected
+```
 
 ## Deploying to Heroku
 
