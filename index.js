@@ -12,6 +12,10 @@ app.set('view engine', 'ejs');
 // Third-party libe
 var firebase = require("firebase");
 const bodyParser = require('body-parser');
+var validate = require('express-validation');
+
+//Validation
+exports.login = require('./validation/login.js');
 
 //bodyParser
 app.use(bodyParser.json());
@@ -25,6 +29,10 @@ firebase.initializeApp(config);
 
 app.get('/', function(request, response) {
   response.render('pages/index');
+});
+
+app.post('/login', validate(exports.login), function(request, response){
+    response.send("200");
 });
 
 //check webhook isalive
