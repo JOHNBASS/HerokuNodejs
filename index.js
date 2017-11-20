@@ -109,13 +109,42 @@ app.get('/get', function(request, response) {
 });
 
 //SocketIO Applications
+var nicknames = [];
 io.on('connection', function(socket){
-  console.log('a user connected');
+ socket.on('new user', function(data){
+          console.log(data);
+          if (nicknames.indexOf(data) != -1) {
 
-    socket.on('disconnect', function(){
-      console.log('user disconnected');
-    });
 
+          } else {
+               socket.emit('chat', 'SERVER', '歡迎光臨 ' + data);
+
+
+               socket.nickname = data;
+               nicknames.push(socket.nickname);
+               io.sockets.emit('usernames', nicknames);
+               updateNicknames();
+          }
+     });
+
+
+     function updateNicknames(){
+          io.sockets.emit('usernames', nicknames);
+     }
+
+
+     //
+     socket.on('send message', function(data){
+          io.sockets.emit('new message', { msg: data, nick: socket.nickname });
+     });
+
+
+     socket.on('disconnect', function(data){
+          if (!socket.nickname) return;
+          io.sockets.emit('chat', 'SERVER', socket.nickname + ' 離開了聊天室～');
+          nicknames.splice(nicknames.indexOf(socket.nickname), 1);
+          updateNicknames();
+     });
 });
 
 
