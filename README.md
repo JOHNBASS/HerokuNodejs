@@ -68,8 +68,8 @@ module.exports.put = {
     id : Joi.number().integer().required()
   },
   body: {
-    email: Joi.string().email().required(),
-    password: Joi.string().regex(/[a-zA-Z0-9]{3,30}/).required()
+    accesstoken: Joi.string().regex(/^XCOOg3LY0odbv8lV9qd78sJhyhHqNY9sNY$/).required(),
+    applicationtoken: Joi.string().regex(/^[a-zA-Z0-9]{16}$/).required()
   }
 };
 
