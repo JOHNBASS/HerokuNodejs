@@ -3,6 +3,10 @@
   "description": "A barebones Node.js app using Express 4",
   "repository": "https://github.com/JOHNBASS/HerokuNodejs",
   "logo": "https://github.com/JOHNBASS/HerokuNodejs/master/public/node.svg",
-  "keywords": ["node", "express", "heroku"],
+  "keywords": [
+    "node",
+    "express",
+    "heroku"
+  ],
   "image": "heroku/nodejs"
 }

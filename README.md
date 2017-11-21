@@ -28,6 +28,60 @@ http://localhost:5000/alive
 
 ```
 
+## Deploying to Docker Heroku
+
+Install the heroku-docker toolbelt plugin:
+```
+$ heroku plugins:install heroku-docker
+```
+
+nitialize your app:
+
+```sh
+$ heroku docker:init
+Wrote Dockerfile
+Wrote docker-compose.yml
+
+```
+
+And run it with Docker Compose:
+```
+$ docker-compose up web
+```
+
+
+## Docker Hacking
+
+To test changes locally, you can edit this image and rebuild it, replacing the heroku/node image on your machine:
+
+```
+docker build -t heroku/node:1.0 .
+```
+
+To return to the official image:
+
+```
+docker pull heroku/node
+```
+
+#Run Docker 
+```
+ $ docker build -t heroku/node:1.0 .
+ $ docker images 
+ $ docker run -p 5000:5000 -d heroku/node:1.0
+ $ docker logs <id>
+```
+
+#Check Runing Docker
+```
+ $ docker ps
+ $ docker kill <id>
+```
+
+#Testing Docker
+
+open http://localhost:5000/alive
+
 ## Deploying to Heroku
 
 ```
