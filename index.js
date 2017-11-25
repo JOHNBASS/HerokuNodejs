@@ -124,32 +124,6 @@ app.get('/update', function(request, response) {
   response.send(status);
 });
 
-app.get('/kill', function(request, response) {
-  var key = request.query.key;
-  var status = request.query.status;
-
-  var db = firebase.database();
-  var ref = db.ref("/users/"+key);
-
-  ref.update(
-    {"status":status}
-  );
-
-  ref.once("value", function(snapshot) {
-    //messenger.sendTextMessage(snapshot.val().fbid, 'kill you');
-    var fbid = snapshot.val().fbid;
-    var fbPostURL = "https://api.chatfuel.com/bots/5a1116f4e4b000de468e17cf/users/" + fbid + "/send?chatfuel_token=qwYLsCSz8hk4ytd6CPKP4C0oalstMnGdpDjF8YFHPHCieKNc0AfrnjVs91fGuH74&chatfuel_block_name=status1";
-    
-    _request.post({url:fbPostURL,headers: {"Content-Type": "application/json"}, body: {"status":1}, json:true}, function(err,httpResponse,body){ 
-      console.log(body);  
-      response.send({"messages":[{"text":"你已經殺死:"+key}]}); 
-    });
-    
-  });
-
-});
-
-
 app.get('/get', function(request, response) {
   var key = request.query.key;
   var db = firebase.database();
@@ -158,6 +132,125 @@ app.get('/get', function(request, response) {
   ref.once("value", function(snapshot) {
       console.log(snapshot.val()+ " " + snapshot.val().status);
       response.send(snapshot.val());
+  });
+
+});
+
+/////////////////game cmd ///////////////
+
+app.get('/register', function(request, response) {
+  var key = request.query.key;
+  //var status = request.query.status;
+  var fbid = request.query.fbid;
+
+  var db = firebase.database();
+  var ref = db.ref("/wse/"+key);
+
+  ref.update(
+    {"fbid":fbid}
+  );
+
+  response.send({"messages":[{"text":"你啟用:"+key+"成功"}]});
+});
+
+app.get('/kill', function(request, response) {
+  var killkey = request.query.killkey;
+  var key = request.query.key;
+  //var status = request.query.status;
+
+  var db = firebase.database();
+  
+  var ref = db.ref("/wse/"+key);
+  
+  var killref = db.ref("/wse/"+killkey);
+
+
+  killref.once("value", function(snapshot) {
+
+  try {
+   
+     var killsataus = snapshot.val().status;
+     var killfbid = snapshot.val().fbid;
+     console.log(killsataus);
+
+        if(killsataus == 1)
+        {
+          response.send({"messages":[{"text":"你不能殺了又殺 殺了又殺 一直殺!"}]}); 
+        }
+        else
+        {
+
+            ref.once("value", function(snapshot) {
+             var mystatus = snapshot.val().status;
+             var mysfraction = snapshot.val().fraction;
+
+                  if(mystatus == 0)
+                  {
+                      ref.update(
+                        {"fraction":mysfraction+1}
+                      );
+
+                      killref.update(
+                        {"status":1}
+                      );
+
+
+                        var fbPostURL = "https://api.chatfuel.com/bots/5a1116f4e4b000de468e17cf/users/" + killfbid + "/send?chatfuel_token=qwYLsCSz8hk4ytd6CPKP4C0oalstMnGdpDjF8YFHPHCieKNc0AfrnjVs91fGuH74&chatfuel_block_name=status1";
+                        
+                        _request.post({url:fbPostURL,headers: {"Content-Type": "application/json"}, body: {"status":1}, json:true}, function(err,httpResponse,body){ 
+                          console.log(body);  
+                          response.send({"messages":[{"text":"你已經殺死:"+killkey}]}); 
+                        });
+
+
+                  }else{
+                    response.send({"messages":[{"text":"你已經死了不能殺人"}]}); 
+                  }
+
+             });
+
+
+        }
+
+
+    } catch (error) {
+      response.send({"messages":[{"text":"沒有這個人"}]}); 
+      console.log('not found');
+    }
+
+    });
+
+});
+
+app.get('/resurrection', function(request, response) {
+  var rekey = request.query.rekey;
+  var key = request.query.key;
+
+  var db = firebase.database();
+  var ref = db.ref("/keys/"+rekey);
+  var myref = db.ref("/wse/"+key);
+
+  ref.once("value", function(snapshot) {
+    try {
+      var isuse = snapshot.val().isuse;
+      if(isuse == 0)
+      {
+        ref.update(
+          {"isuse":1}
+        );
+        myref.update(
+          {"status":0}
+        );
+        response.send({"messages":[{"text":"你已經復活了"}]}); 
+      }
+      else{
+        response.send({"messages":[{"text":"這把key已經復活過了"}]});
+      }
+
+    } catch (error) {
+      response.send({"messages":[{"text":"你輸入錯誤"}]}); 
+    }
+      
   });
 
 });
