@@ -29,6 +29,7 @@ app.get('/favicon.ico', (req, res) => {
 //Applications
 
 app.get('/test', function (req, res) {
+  
     var driver = new webdriver.Builder()
         .forBrowser('phantomjs')
         .build();
