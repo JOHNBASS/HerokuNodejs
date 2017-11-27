@@ -29,11 +29,11 @@ app.get('/favicon.ico', (req, res) => {
 //Applications
 
 app.get('/test', function (req, res) {
-  
+
     var driver = new webdriver.Builder()
         .forBrowser('phantomjs')
         .build();
-    driver.get('http://www.google.com/ncr');
+    driver.get('http://www.google.com/');
     driver.findElement(By.name('q')).sendKeys('webdriver');
     driver.findElement(By.name('btnG')).click();
     driver.wait(function() {

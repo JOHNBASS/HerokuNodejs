@@ -27,6 +27,12 @@ If work - service alive
 http://localhost:5000/alive
 
 ```
+## Phantomjs
+```
+$ npm install selenium-webdriver
+$ npm install phantomjs-prebuilt
+```
+run /test
 
 ## Deploying to Heroku
 
