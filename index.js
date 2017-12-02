@@ -155,6 +155,8 @@ app.get('/register', function(request, response) {
 
 app.get('/kill', function(request, response) {
   var killkey = request.query.killkey;
+  killkey = killkey.toUpperCase();
+  
   var key = request.query.key;
   //var status = request.query.status;
 
@@ -255,6 +257,39 @@ app.get('/resurrection', function(request, response) {
 
 });
 
+
+app.get('/reset', function(request, response) {
+  var rekey = request.query.rekey;
+  var key = request.query.key;
+
+  var db = firebase.database();
+  var ref = db.ref("/keys/"+rekey);
+  var myref = db.ref("/wse/"+key);
+
+  ref.once("value", function(snapshot) {
+    try {
+      var isuse = snapshot.val().isuse;
+      if(isuse == 0)
+      {
+        ref.update(
+          {"isuse":1}
+        );
+        myref.update(
+          {"status":0}
+        );
+        response.send({"messages":[{"text":"你已經復活了"}]}); 
+      }
+      else{
+        response.send({"messages":[{"text":"這把key已經復活過了"}]});
+      }
+
+    } catch (error) {
+      response.send({"messages":[{"text":"你輸入錯誤"}]}); 
+    }
+      
+  });
+
+});
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
