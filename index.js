@@ -140,6 +140,7 @@ app.get('/get', function(request, response) {
 
 app.get('/register', function(request, response) {
   var key = request.query.key;
+  key = key.toUpperCase();
   //var status = request.query.status;
   var fbid = request.query.fbid;
 
@@ -158,11 +159,12 @@ app.get('/kill', function(request, response) {
   killkey = killkey.toUpperCase();
 
   var key = request.query.key;
+  key = key.toUpperCase();
   //var status = request.query.status;
 
   var db = firebase.database();
   
-  
+
   var ref = db.ref("/wse/"+key);
   
   var killref = db.ref("/wse/"+killkey);
@@ -227,7 +229,9 @@ app.get('/kill', function(request, response) {
 
 app.get('/resurrection', function(request, response) {
   var rekey = request.query.rekey;
+  rekey = rekey.toUpperCase();
   var key = request.query.key;
+  key = key.toUpperCase();
 
   var db = firebase.database();
   var ref = db.ref("/keys/"+rekey);
