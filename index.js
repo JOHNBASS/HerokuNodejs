@@ -156,11 +156,12 @@ app.get('/register', function(request, response) {
 app.get('/kill', function(request, response) {
   var killkey = request.query.killkey;
   killkey = killkey.toUpperCase();
-  
+
   var key = request.query.key;
   //var status = request.query.status;
 
   var db = firebase.database();
+  
   
   var ref = db.ref("/wse/"+key);
   
