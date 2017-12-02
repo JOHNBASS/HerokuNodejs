@@ -195,7 +195,7 @@ app.get('/kill', function(request, response) {
                       );
 
 
-                        var fbPostURL = "https://api.chatfuel.com/bots/5a1116f4e4b000de468e17cf/users/" + killfbid + "/send?chatfuel_token=qwYLsCSz8hk4ytd6CPKP4C0oalstMnGdpDjF8YFHPHCieKNc0AfrnjVs91fGuH74&chatfuel_block_name=status1";
+                        var fbPostURL = "" + killfbid + "/send?chatfuel_token=&chatfuel_block_name=status1";
                         
                         _request.post({url:fbPostURL,headers: {"Content-Type": "application/json"}, body: {"status":1}, json:true}, function(err,httpResponse,body){ 
                           console.log(body);  
