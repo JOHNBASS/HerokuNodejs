@@ -25,12 +25,7 @@ app.use(bodyParser.json());
 
 //firebase
 var config = {
-    apiKey: "AIzaSyDRZbp33KneGrbLwFvkPRd_40GlkmUD0J0",
-    authDomain: "wseteambuilding.firebaseapp.com",
-    databaseURL: "https://wseteambuilding.firebaseio.com",
-    projectId: "wseteambuilding",
-    storageBucket: "wseteambuilding.appspot.com",
-    messagingSenderId: "965057226764"
+
 }
 
 firebase.initializeApp(config);
